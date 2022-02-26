@@ -1,0 +1,61 @@
+@font-face {
+    font-family: Gochi;
+    src: url(GochiHand-Regular.ttf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: rgb(241, 223, 117);
+}
+
+.board-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header{
+    margin: 10px;
+    text-align: center;
+    color: black;
+    font-family: Gochi;
+    font-size: 62px;
+}
+
+.board{
+    background-color: black;
+    width: 500px;
+    height: 500px;
+    display: grid;
+    gap: 15px;
+    border: 15px solid black;
+    border-radius: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.tile{
+    background-color: rgba(228, 79, 79);
+    border-radius: 5px;
+    font-family: Gochi;
+    font-size: 120px;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.tile:hover{
+    background-color: rgba(228, 79, 79, 0.63);
+}
+
+.instruction{
+    font-family: Gochi;
+    padding-top: 30px;
+    font-size: 32px;
+    text-align: center;
+}
