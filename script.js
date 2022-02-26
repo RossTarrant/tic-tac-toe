@@ -61,11 +61,7 @@ const player2 = Player("Hannah", "O");
 const controller = (() => {
 
     let turn = 1;
-    let instruction = "";
-
-    const checkGameState = () => {
-        
-    }
+    let instruction = `It is ${player1.getName()}'s turn!`;
 
     const setInstruction = (instruction) => {
         // Set instruction
@@ -92,6 +88,8 @@ const controller = (() => {
         board.checkForWin();
 
     }
+
+    setInstruction(instruction);
 
     return{takeTurn}
 })();
