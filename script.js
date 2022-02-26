@@ -40,8 +40,37 @@ const board = (() => {
         }
     }
 
-    const checkForWin = () => {
+    const checkForWin = (marker) => {
         // Check if game has been won by a player
+
+        if(board[0] === marker && board[3] === marker && board[6] === marker){
+            return true;
+        }
+        else if(board[0] === marker && board[1] === marker && board[2] === marker){
+            return true;
+        }
+        else if(board[0] === marker && board[4] === marker && board[8] === marker){
+            return true;
+        }
+        else if(board[1] === marker && board[4] === marker && board[7] === marker){
+            return true;
+        }
+        else if(board[2] === marker && board[4] === marker && board[6] === marker){
+            return true;
+        }
+        else if(board[2] === marker && board[5] === marker && board[8] === marker){
+            return true;
+        }
+        else if(board[3] === marker && board[4] === marker && board[5] === marker){
+            return true;
+        }
+        else if(board[6] === marker && board[7] === marker && board[8] === marker){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     return{addMarker, resetBoard, checkForWin};
@@ -61,6 +90,7 @@ const player2 = Player("Hannah", "O");
 const controller = (() => {
 
     let turn = 1;
+    let counter = 0;
     let instruction = `It is ${player1.getName()}'s turn!`;
 
     const setInstruction = (instruction) => {
@@ -70,23 +100,26 @@ const controller = (() => {
     }
 
     const takeTurn = (i) => {
-
+        counter ++;
         if(turn==1){
+            currentPlayer = player1.getName();
             currentMarker = player1.getMarker();
             if(board.addMarker(i, currentMarker)){
                 turn = 2;
                 setInstruction(`It is ${player2.getName()}'s turn!`)
             }
         }else{
+            currentPlayer = player2.getName();
             currentMarker = player2.getMarker();
             if(board.addMarker(i, currentMarker)){
                 turn = 1;
                 setInstruction(`It is ${player1.getName()}'s turn!`)
             }
         }
-        
-        board.checkForWin();
 
+        if(board.checkForWin(currentMarker)===true){
+            setInstruction(`${currentPlayer} is the winner!!!`)
+        }
     }
 
     setInstruction(instruction);
