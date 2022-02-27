@@ -209,7 +209,6 @@ const controller = (() => {
 
     const gameOver = () => {
         playing = false;
-        setInstruction(`${currentPlayer} is the winner!!!`)
         addResetButton();
     }
 
@@ -225,23 +224,27 @@ const controller = (() => {
     }
 
     const takeTurn = (i) => {
-        if(turn==1){
+        turn++;
+        if(turn%2===0){
             currentPlayer = player1.getName();
             currentMarker = player1.getMarker();
             if(board.addMarker(i, currentMarker)){
-                turn = 2;
                 setInstruction(`It is ${player2.getName()}'s turn!`)
             }
         }else{
             currentPlayer = player2.getName();
             currentMarker = player2.getMarker();
             if(board.addMarker(i, currentMarker)){
-                turn = 1;
                 setInstruction(`It is ${player1.getName()}'s turn!`)
             }
         }
 
         if(board.checkForWin(currentMarker)===true){
+            setInstruction(`${currentPlayer} is the winner!!!`)
+            gameOver();
+        }
+        if(turn===10){
+            setInstruction(`It's a draw!!!`)
             gameOver();
         }
     }
