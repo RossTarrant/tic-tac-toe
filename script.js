@@ -2,16 +2,24 @@ const board = (() => {
 
     let board = [];
 
-    const boardElement = document.querySelector(".board");
-    for(let i = 0; i < 9; i++){
-        newTile = document.createElement("div");
-        newTile.classList.add("tile");
-        newTile.addEventListener("click", function (){
-            controller.takeTurn(i);
-        })
-        board.push("")
-        boardElement.appendChild(newTile);
+    const createBoard = () => {
+        const boardContainer = document.querySelector(".board-container");
+        const boardElement = document.createElement("div");
+        boardElement.classList.add("board")
+        for(let i = 0; i < 9; i++){
+            newTile = document.createElement("div");
+            newTile.classList.add("tile");
+            newTile.addEventListener("click", function (){
+                if (controller.getGameState()){
+                    controller.takeTurn(i);
+                }
+            })
+            board.push("")
+            boardElement.appendChild(newTile);
+        }
+        boardContainer.appendChild(boardElement);
     }
+    
 
     const addMarker = (pos, marker) =>{
         if (board[pos] === ""){
@@ -73,7 +81,7 @@ const board = (() => {
 
     }
 
-    return{addMarker, resetBoard, checkForWin};
+    return{addMarker, resetBoard, createBoard, checkForWin};
 
 })();
 
@@ -84,14 +92,24 @@ const Player = (name, marker) => {
     return {getName, getMarker}
 };
 
-const player1 = Player("Ross", "X");
-const player2 = Player("Hannah", "O");
+const player1 = Player("Player 1", "X");
+const player2 = Player("Player 2", "O");
 
 const controller = (() => {
 
     let turn = 1;
-    let counter = 0;
-    let instruction = `It is ${player1.getName()}'s turn!`;
+    let playing = false;
+    // let instruction = `It is ${player1.getName()}'s turn!`;
+
+    const beginGame = () => {
+        board.createBoard();
+        setInstruction(`It is ${player1.getName()}'s turn!`);
+    }
+
+    const setupGame = () => {
+        createSetupForm();
+        playing = true;
+    }
 
     const setInstruction = (instruction) => {
         // Set instruction
@@ -99,8 +117,109 @@ const controller = (() => {
         instructionElement.textContent = instruction;
     }
 
+    const getGameState = () => {
+        return playing;
+    }
+
+    const addResetButton = () => {
+        const setupContainer = document.querySelector(".setup-container");
+        const setupDiv = document.createElement("div")
+        setupDiv.classList.add("setup");
+        const resetBtn = document.createElement("button");
+        resetBtn.textContent = "Restart Game";
+        resetBtn.classList.add("startBtn");
+        resetBtn.addEventListener("click", function(){
+            resetGame();
+        })
+        setupDiv.appendChild(resetBtn);
+        setupContainer.appendChild(setupDiv);
+    }
+
+    const createSetupForm = () => {
+        const setupContainer = document.querySelector(".setup-container");
+        const setupDiv = document.createElement("div");
+        setupDiv.classList.add("setup");
+
+        const player1P = document.createElement("p");
+        player1P.textContent = "Player 1 (X)";
+        player1P.classList.add("player-setup");
+        const player1HumanBtn = document.createElement("button");
+        player1HumanBtn.textContent = "Human";
+        player1HumanBtn.classList.add("player1Btn");
+        player1HumanBtn.classList.add("selected");
+        const player1CompBtn = document.createElement("button");
+        player1CompBtn.textContent = "Computer";
+        player1CompBtn.classList.add("player1Btn");
+
+        const player2P = document.createElement("p");
+        player2P.textContent = "Player 2 (O)";
+        player2P.classList.add("player-setup");
+        const player2HumanBtn = document.createElement("button");
+        player2HumanBtn.textContent = "Human";
+        player2HumanBtn.classList.add("player2Btn");
+        player2HumanBtn.classList.add("selected");
+        const player2CompBtn = document.createElement("button");
+        player2CompBtn.textContent = "Computer";
+        player2CompBtn.classList.add("player2Btn");
+
+        const startBtn = document.createElement("button");
+        startBtn.textContent = "Start Game";
+        startBtn.classList.add("startBtn");
+
+        setupDiv.appendChild(player1P);
+        setupDiv.appendChild(player1HumanBtn);
+        setupDiv.appendChild(player1CompBtn);
+        setupDiv.appendChild(player2P);
+        setupDiv.appendChild(player2HumanBtn);
+        setupDiv.appendChild(player2CompBtn);
+        setupDiv.appendChild(startBtn);
+        setupContainer.appendChild(setupDiv);
+
+        const buttons = document.querySelectorAll(".player1Btn")
+        for (const button of buttons) {
+            button.addEventListener("click", function(){
+                buttons.forEach(btn => {
+                    btn.classList.remove("selected")
+                });
+                button.classList.add("selected")
+            })
+        }
+
+        const buttons2 = document.querySelectorAll(".player2Btn")
+        for (const button of buttons2) {
+            button.addEventListener("click", function(){
+                buttons2.forEach(btn => {
+                    btn.classList.remove("selected")
+                });
+                button.classList.add("selected")
+            })
+        }
+
+        startBtn.addEventListener("click", function(){
+            setup = document.querySelector(".setup")
+            setup.remove();
+            beginGame();
+        })
+    }
+
+    const gameOver = () => {
+        playing = false;
+        setInstruction(`${currentPlayer} is the winner!!!`)
+        addResetButton();
+    }
+
+    const resetGame = () => {
+        turn = 1;
+        const boardElement = document.querySelector(".board")
+        boardElement.remove();
+        board.resetBoard();
+        const setupDiv = document.querySelector(".setup")
+        setInstruction("");
+        setupDiv.remove();
+        setupGame();
+    }
+
     const takeTurn = (i) => {
-        counter ++;
         if(turn==1){
             currentPlayer = player1.getName();
             currentMarker = player1.getMarker();
@@ -118,11 +237,11 @@ const controller = (() => {
         }
 
         if(board.checkForWin(currentMarker)===true){
-            setInstruction(`${currentPlayer} is the winner!!!`)
+            gameOver();
         }
     }
 
-    setInstruction(instruction);
-
-    return{takeTurn}
+    return{beginGame, setupGame, takeTurn, getGameState}
 })();
+
+controller.setupGame();

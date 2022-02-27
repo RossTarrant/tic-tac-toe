@@ -24,13 +24,13 @@ body{
     text-align: center;
     color: black;
     font-family: Gochi;
-    font-size: 62px;
+    font-size: clamp(1rem, -0.875rem + 8.333333vw, 3.5rem);
 }
 
 .board{
     background-color: black;
-    width: 500px;
-    height: 500px;
+    width: min(80vw, 500px);
+    height: min(60vh, 500px);
     display: grid;
     gap: 15px;
     border: 15px solid black;
@@ -40,10 +40,13 @@ body{
 }
 
 .tile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(228, 79, 79);
     border-radius: 5px;
     font-family: Gochi;
-    font-size: 120px;
+    font-size: clamp(1rem, -0.875rem + 8.333333vw, 4.5rem);;
     color: black;
     text-align: center;
     padding-top: 10px;
@@ -56,6 +59,42 @@ body{
 .instruction{
     font-family: Gochi;
     padding-top: 30px;
-    font-size: 48px;
+    padding-bottom: 30px;
+    font-size: clamp(1rem, -0.875rem + 12.333333vw, 3.5rem);;
     text-align: center;
+}
+
+.setup{
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 300px 300px;
+    grid-template-rows: 1fr 1fr 1fr 1fr 0.7fr;
+    gap: 30px;
+}
+
+.player-setup{
+    font-family: Gochi;
+    font-size: clamp(1rem, -0.875rem + 12.333333vw, 3.5rem);
+    text-align: center;
+    grid-column: span 2;
+}
+
+button{
+    border: 2px solid black;
+    border-radius: 16px;
+    width: 200px;
+    background-color: white;
+    justify-self: center;
+    font-family: Gochi;
+    font-size: clamp(1rem, -0.875rem + 8.333333vw, 1.5rem);
+}
+
+.startBtn{
+    background-color: white;
+    grid-column: span 2;
+}
+
+.selected{
+    background-color: rgba(228, 79, 79);
 }
