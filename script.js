@@ -166,6 +166,10 @@ const controller = (() => {
         startBtn.textContent = "Start Game";
         startBtn.classList.add("startBtn");
 
+        const disclaimer = document.createElement("p");
+        disclaimer.textContent = "As of right now, the 'Computer' mode option does not work. I am currently working on implemenenting it :-)";
+        disclaimer.classList.add("disclaimer")
+
         setupDiv.appendChild(player1P);
         setupDiv.appendChild(player1HumanBtn);
         setupDiv.appendChild(player1CompBtn);
@@ -173,6 +177,7 @@ const controller = (() => {
         setupDiv.appendChild(player2HumanBtn);
         setupDiv.appendChild(player2CompBtn);
         setupDiv.appendChild(startBtn);
+        setupDiv.appendChild(disclaimer)
         setupContainer.appendChild(setupDiv);
 
         const buttons = document.querySelectorAll(".player1Btn")

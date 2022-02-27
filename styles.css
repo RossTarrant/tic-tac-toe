@@ -80,6 +80,13 @@ body{
     grid-column: span 2;
 }
 
+.disclaimer{
+    font-family: Gochi;
+    font-size: clamp(0.5rem, -0.875rem + 8.333333vw, 1.5rem);
+    text-align: center;
+    grid-column: span 2;
+}
+
 button{
     border: 2px solid black;
     border-radius: 16px;
