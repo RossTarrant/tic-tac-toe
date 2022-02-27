@@ -59,7 +59,7 @@ body{
 .instruction{
     font-family: Gochi;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     font-size: clamp(1rem, -0.875rem + 12.333333vw, 3.5rem);;
     text-align: center;
 }
@@ -83,7 +83,7 @@ body{
 button{
     border: 2px solid black;
     border-radius: 16px;
-    width: 200px;
+    width: min(200px, 25vw);
     background-color: white;
     justify-self: center;
     font-family: Gochi;
