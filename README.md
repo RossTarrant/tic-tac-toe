@@ -31,5 +31,3 @@ _**If I was to spend more time on this project I would:**_
 - I want to spend some time developing a computer opponent that makes a calculated move based on the current state of the board. My current solution simply takes a random valid move which offers little challenge to the player. I have been directed towards the minmax algorithm to help with this.
 
 - Tracking scores over multiple games would be an exciting feature to implement. It would allow two users to play for example a best of 3 or a best of 5 game format. I think this would be a challenge to complete, but would also require little changes to my code due to the function heavy nature of it.
-
-- Extra time 3
